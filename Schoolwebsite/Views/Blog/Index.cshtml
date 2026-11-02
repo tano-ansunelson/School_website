@@ -1,0 +1,237 @@
+﻿@using Schoolwebsite.Models
+@model List<BlogPost>
+@{
+    ViewData["Title"] = "Blog";
+    int currentPage = ViewBag.CurrentPage;
+    int totalPages = ViewBag.TotalPages;
+    List<string> allCategories = ViewBag.AllCategories;
+    List<BlogPost> recentPosts = ViewBag.RecentPosts;
+}
+
+<!--====== PAGE BANNER PART START ======-->
+
+<section id="page-banner" class="pt-105 pb-130 bg_cover" data-overlay="8" style="background-image: url(@Url.Content("~/images/page-banner-4.jpg"))">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="page-banner-cont">
+                    <h2>Blog</h2>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Blog</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--====== PAGE BANNER PART ENDS ======-->
+<!--====== BLOG PART START ======-->
+
+<section id="blog-page" class="pt-90 pb-120 gray-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                @if (!Model.Any())
+                {
+                    <p class="text-muted mt-30">No blog posts yet.</p>
+                }
+                @foreach (var post in Model)
+                {
+                    <div class="singel-blog mt-30">
+                        <div class="blog-thum">
+                            <img src="@(string.IsNullOrEmpty(post.ImagePath) ? "/images/no-photo.png" : post.ImagePath)" alt="@post.Title">
+                        </div>
+                        <div class="blog-cont">
+                            <a asp-controller="Blog" asp-action="Details" asp-route-id="@post.BlogPostId"><h4>@post.Title</h4></a>
+                            <ul>
+                                <li><i class="fa fa-calendar"></i>@post.Date.ToString("dd MMM yyyy")</li>
+                                <li><i class="fa fa-user"></i>@post.Author</li>
+                                <li><i class="fa fa-tags"></i>@post.Category</li>
+                            </ul>
+                            <p>@post.Summary</p>
+                            <a asp-controller="Blog" asp-action="Details" asp-route-id="@post.BlogPostId" class="main-btn mt-10">Read More</a>
+                        </div>
+                    </div> <!-- singel blog -->
+                }
+
+                @if (totalPages > 1)
+                {
+                    <nav aria-label="Blog pagination" class="mt-40">
+                        <ul class="pagination">
+                            <li class="page-item @(currentPage == 1 ? "disabled" : "")">
+                                <a class="page-link" asp-action="Index" asp-route-page="@(currentPage - 1)" aria-label="Previous">
+                                    <i class="fa fa-angle-left"></i>
+                                </a>
+                            </li>
+
+                            @for (int i = 1; i <= totalPages; i++)
+                            {
+                                <li class="page-item @(i == currentPage ? "active" : "")">
+                                    <a class="page-link" asp-action="Index" asp-route-page="@i">@i</a>
+                                </li>
+                            }
+
+                            <li class="page-item @(currentPage == totalPages ? "disabled" : "")">
+                                <a class="page-link" asp-action="Index" asp-route-page="@(currentPage + 1)" aria-label="Next">
+                                    <i class="fa fa-angle-right"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                }
+            </div>
+
+            <div class="col-lg-4">
+                <div class="saidbar">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="categories mt-30">
+                                <h4>Categories</h4>
+                                <ul>
+                                    @foreach (var cat in allCategories)
+                                    {
+                                        <li><a href="#">@cat</a></li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="saidbar-post mt-30">
+                                <h4>Recent Posts</h4>
+                                <ul>
+                                    @foreach (var post in recentPosts)
+                                    {
+                                        <li>
+                                            <a asp-controller="Blog" asp-action="Details" asp-route-id="@post.BlogPostId">
+                                                <div class="singel-post">
+                                                    <div class="thum">
+                                                        <img src="@(string.IsNullOrEmpty(post.ImagePath) ? "/images/no-photo.png" : post.ImagePath)" alt="@post.Title">
+                                                    </div>
+                                                    <div class="cont">
+                                                        <h6>@post.Title</h6>
+                                                        <span>@post.Date.ToString("dd MMM yyyy")</span>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--====== BLOG PART ENDS ======-->
+
+
+
+
+
+
+
+@* @using Schoolwebsite.Models
+@model List<BlogPost>
+@{
+    ViewData["Title"] = "Blog";
+}
+
+<!--====== PAGE BANNER PART START ======-->
+
+<section id="page-banner" class="pt-105 pb-130 bg_cover" data-overlay="8" style="background-image: url(@Url.Content("~/images/page-banner-4.jpg"))">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="page-banner-cont">
+                    <h2>Blog</h2>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Blog</li>
+                        </ol>
+                    </nav>
+                </div>  <!-- page banner cont -->
+            </div>
+        </div> <!-- row -->
+    </div> <!-- container -->
+</section>
+
+<!--====== PAGE BANNER PART ENDS ======-->
+<!--====== BLOG PART START ======-->
+
+<section id="blog-page" class="pt-90 pb-120 gray-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                @foreach (var post in Model)
+                {
+                    <div class="singel-blog mt-30">
+                        <div class="blog-thum">
+                            <img src="@post.ImagePath" alt="@post.Title">
+                        </div>
+                        <div class="blog-cont">
+                            <a asp-controller="Blog" asp-action="Details" asp-route-id="@post.BlogPostId"><h3>@post.Title</h3></a>
+                            <ul>
+                                <li><a href="#"><i class="fa fa-calendar"></i>@post.Date.ToString("dd MMM yyyy")</a></li>
+                                <li><a href="#"><i class="fa fa-user"></i>@post.Author</a></li>
+                                <li><a href="#"><i class="fa fa-tags"></i>@post.Category</a></li>
+                            </ul>
+                            <p>@post.Summary</p>
+                            <a asp-controller="Blog" asp-action="Details" asp-route-id="@post.BlogPostId" class="main-btn mt-15">Read More</a>
+                        </div>
+                    </div> <!-- singel blog -->
+                }
+            </div>
+            <div class="col-lg-4">
+                <div class="saidbar">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="categories mt-30">
+                                <h4>Categories</h4>
+                                <ul>
+                                    @foreach (var cat in Model.Select(p => p.Category).Distinct())
+                                    {
+                                        <li><a href="#">@cat</a></li>
+                                    }
+                                </ul>
+                            </div>
+                        </div> <!-- categories -->
+                        <div class="col-lg-12">
+                            <div class="saidbar-post mt-30">
+                                <h4>Recent Posts</h4>
+                                <ul>
+                                    @foreach (var post in Model.Take(3))
+                                    {
+                                        <li>
+                                            <a asp-controller="Blog" asp-action="Details" asp-route-id="@post.BlogPostId">
+                                                <div class="singel-post">
+                                                    <div class="thum">
+                                                        <img src="@post.ImagePath" alt="@post.Title">
+                                                    </div>
+                                                    <div class="cont">
+                                                        <h6>@post.Title</h6>
+                                                        <span>@post.Date.ToString("dd MMM yyyy")</span>
+                                                    </div>
+                                                </div> <!-- singel post -->
+                                            </a>
+                                        </li>
+                                    }
+                                </ul>
+                            </div> <!-- saidbar post -->
+                        </div>
+                    </div> <!-- row -->
+                </div> <!-- saidbar -->
+            </div>
+        </div> <!-- row -->
+    </div> <!-- container -->
+</section>
+
+<!--====== BLOG PART ENDS ======-->
+ *@

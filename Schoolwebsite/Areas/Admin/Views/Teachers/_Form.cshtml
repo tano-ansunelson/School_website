@@ -1,0 +1,140 @@
+﻿@using Schoolwebsite.ViewModels.Admin
+@model TeacherViewModel
+@{
+    bool isEdit = Model.Id != 0;
+}
+
+<form asp-action="@(isEdit ? "Edit" : "Create")" method="post" enctype="multipart/form-data">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="Id" />
+
+    <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group mb-15">
+                <label asp-for="Name"></label>
+                <input asp-for="Name" class="form-control">
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-15">
+                <label asp-for="Role"></label>
+                <input asp-for="Role" class="form-control">
+                <span asp-validation-for="Role" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-15">
+                <label asp-for="Subject"></label>
+                <input asp-for="Subject" class="form-control">
+                <span asp-validation-for="Subject" class="text-danger"></span>
+            </div>
+           @*  <div class="form-group mb-15">
+                <label>Category</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" asp-for="IsAdministration" id="IsAdministration">
+                    <label class="form-check-label" for="IsAdministration">Administration</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" asp-for="IsHod" id="IsHod">
+                    <label class="form-check-label" for="IsHod">Head of Department (HOD)</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" asp-for="IsHouseMaster" id="IsHouseMaster">
+                    <label class="form-check-label" for="IsHouseMaster">House Master</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" asp-for="IsTeacher" id="IsTeacher">
+                    <label class="form-check-label" for="IsTeacher">Teacher</label>
+                </div>
+            </div> *@
+            <div class="form-group mb-15">
+                <label>Category</label>
+
+                <div class="form-check">
+                    <input class="form-check-input category-toggle" type="checkbox" asp-for="IsAdministration" data-target="#AdministrationTitleField">
+                    <label class="form-check-label" for="IsAdministration">Administration</label>
+                </div>
+                <div id="AdministrationTitleField" class="mb-15 mt-5" style="display:none; margin-left:25px;">
+                    <input asp-for="AdministrationTitle" class="form-control" placeholder="e.g. Vice Principal">
+                </div>
+
+                <div class="form-check">
+                    <input class="form-check-input category-toggle" type="checkbox" asp-for="IsHod" data-target="#HodTitleField">
+                    <label class="form-check-label" for="IsHod">Head of Department (HOD)</label>
+                </div>
+                <div id="HodTitleField" class="mb-15 mt-5" style="display:none; margin-left:25px;">
+                    <input asp-for="HodTitle" class="form-control" placeholder="e.g. Head of Science Department">
+                </div>
+
+                <div class="form-check">
+                    <input class="form-check-input category-toggle" type="checkbox" asp-for="IsHouseMaster" data-target="#HouseMasterTitleField">
+                    <label class="form-check-label" for="IsHouseMaster">House Master</label>
+                </div>
+                <div id="HouseMasterTitleField" class="mb-15 mt-5" style="display:none; margin-left:25px;">
+                    <input asp-for="HouseMasterTitle" class="form-control" placeholder="e.g. Master, Blue House">
+                </div>
+
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" asp-for="IsTeacher">
+                    <label class="form-check-label" for="IsTeacher">Teacher</label>
+                </div>
+            </div>
+
+            @section Scripts {
+                <script>
+                                document.querySelectorAll('.category-toggle').forEach(function(checkbox) {
+                                    var target = document.querySelector(checkbox.dataset.target);
+
+                                    function sync() {
+                                        target.style.display = checkbox.checked ? 'block' : 'none';
+                                    }
+
+                                    sync(); // set correct state on page load (important for Edit — box may already be checked)
+                                    checkbox.addEventListener('change', sync);
+                                });
+                </script>
+            }
+            <div class="form-group mb-15">
+                <label asp-for="About"></label>
+                <textarea asp-for="About" class="form-control" rows="4"></textarea>
+                <span asp-validation-for="About" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-15">
+                <label asp-for="Achievements"></label>
+                <textarea asp-for="Achievements" class="form-control" rows="3"></textarea>
+            </div>
+            <div class="form-group mb-15">
+                <label asp-for="Objective"></label>
+                <textarea asp-for="Objective" class="form-control" rows="3"></textarea>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group mb-15">
+                <label asp-for="Image"></label>
+                <input asp-for="Image" type="file" class="form-control" accept="image/*">
+                <span asp-validation-for="Image" class="text-danger"></span>
+                @if (isEdit && !string.IsNullOrEmpty(Model.ExistingImagePath))
+                {
+                    <div class="mt-10">
+                        <img src="@Model.ExistingImagePath" style="max-width:150px;border-radius:4px;">
+                        <p class="text-muted mb-0" style="font-size:12px;">Current photo — choose a new file above to replace it.</p>
+                    </div>
+                }
+            </div>
+            <div class="form-group mb-15">
+                <label asp-for="FacebookUrl"></label>
+                <input asp-for="FacebookUrl" class="form-control">
+            </div>
+            <div class="form-group mb-15">
+                <label asp-for="TwitterUrl"></label>
+                <input asp-for="TwitterUrl" class="form-control">
+            </div>
+            <div class="form-group mb-15">
+                <label asp-for="LinkedInUrl"></label>
+                <input asp-for="LinkedInUrl" class="form-control">
+            </div>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">@(isEdit ? "Save Changes" : "Add Teacher")</button>
+    <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+</form>

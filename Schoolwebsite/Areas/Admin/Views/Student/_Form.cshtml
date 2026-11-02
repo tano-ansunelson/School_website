@@ -1,0 +1,46 @@
+﻿@using Schoolwebsite.ViewModels.Admin
+@model StudentViewModel
+@{
+    bool isEdit = Model.Id != 0;
+}
+
+<form asp-action="@(isEdit ? "Edit" : "Create")" method="post" enctype="multipart/form-data">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="Id" />
+
+    <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group mb-15">
+                <label asp-for="Name"></label>
+                <input asp-for="Name" class="form-control">
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-15">
+                <label asp-for="Role"></label>
+                <input asp-for="Role" class="form-control">
+                <span asp-validation-for="Role" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group mb-15">
+                <label asp-for="Image"></label>
+                <input asp-for="Image" type="file" class="form-control" accept="image/*">
+                <span asp-validation-for="Image" class="text-danger"></span>
+                @if (isEdit && !string.IsNullOrEmpty(Model.ExistingImagePath))
+                {
+                    <div class="mt-10">
+                        <img src="@Model.ExistingImagePath" style="max-width:150px;border-radius:4px;">
+                        <p class="text-muted mb-0" style="font-size:12px;">Current photo — choose a new file above to replace it.</p>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">@(isEdit ? "Save Changes" : "Add Student")</button>
+    <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+</form>

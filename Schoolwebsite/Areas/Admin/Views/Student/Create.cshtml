@@ -1,0 +1,21 @@
+﻿@using Schoolwebsite.ViewModels.Admin
+@model StudentViewModel
+@{
+    ViewData["Title"] = "Add Student";
+}
+
+<div class="admin-card">
+    <partial name="_Form" model="Model" />
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        document.querySelectorAll('.category-toggle').forEach(function(checkbox) {
+            var target = document.querySelector(checkbox.dataset.target);
+            function sync() { target.style.display = checkbox.checked ? 'block' : 'none'; }
+            sync();
+            checkbox.addEventListener('change', sync);
+        });
+    </script>
+}

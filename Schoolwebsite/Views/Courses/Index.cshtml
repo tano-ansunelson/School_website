@@ -1,0 +1,64 @@
+﻿@* @model Schoolwebsite.ViewModels.Admin.CourseViewModel *@
+@model List<Course> 
+@{
+    ViewData["Title"] = "Courses";
+}
+
+<!--====== PAGE BANNER PART START ======-->
+
+<section id="page-banner" class="pt-105 pb-110 bg_cover" data-overlay="8" style="background-image: url(@Url.Content("~/images/page-banner-2.jpg"))">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="page-banner-cont">
+                    <h2>Academic Programmes</h2>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Courses</li>
+                        </ol>
+                    </nav>
+                </div>  <!-- page banner cont -->
+            </div>
+        </div> <!-- row -->
+    </div> <!-- container -->
+</section>
+
+<!--====== PAGE BANNER PART ENDS ======-->
+<!--====== COURSE PART START ======-->
+
+<section id="course-part" class="pt-90 pb-120 gray-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="section-title pb-45">
+                    <h5>What we offer</h5>
+                    <h2>Our Academic Programmes</h2>
+                </div> <!-- section title -->
+            </div>
+        </div> <!-- row -->
+        <div class="row mt-30">
+            @foreach (var course in Model)
+            {
+                <div class="col-lg-4 col-md-6">
+                    <div class="singel-course mt-30">
+                        <div class="thum">
+                            <div class="image">
+                                <img src="@course.ImagePath" alt="@course.Title">
+                            </div>
+                            <div class="price">
+                                <span>@course.Duration</span>
+                            </div>
+                        </div>
+                        <div class="cont">
+                           @*  <span>@course.Category</span> *@
+                            <a asp-controller="Courses" asp-action="Details" asp-route-id="@course.CourseId"><h4>@course.Title</h4></a>
+                        </div>
+                    </div> <!-- singel course -->
+                </div>
+            }
+        </div> <!-- row -->
+    </div> <!-- container -->
+</section>
+
+<!--====== COURSE PART ENDS ======-->

@@ -1,0 +1,49 @@
+﻿@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="row">
+    <div class="col-md-3 mb-20">
+        <div class="admin-card stat-card">
+            <span>Teachers</span>
+            <h2>@ViewBag.TeacherCount</h2>
+            <a asp-area="Admin" asp-controller="Teachers" asp-action="Index">Manage &rarr;</a>
+        </div>
+    </div>
+    <div class="col-md-3 mb-20">
+        <div class="admin-card stat-card">
+            <span>Courses</span>
+            <h2>@ViewBag.CourseCount</h2>
+            <a asp-area="Admin" asp-controller="Courses" asp-action="Index">Manage &rarr;</a>
+        </div>
+    </div>
+    <div class="col-md-3 mb-20">
+        <div class="admin-card stat-card">
+            <span>Events</span>
+            <h2>@ViewBag.EventCount</h2>
+            <a asp-area="Admin" asp-controller="Events" asp-action="Index">Manage &rarr;</a>
+        </div>
+    </div>
+    <div class="col-md-3 mb-20">
+        <div class="admin-card stat-card">
+            <span>Blog Posts</span>
+            <h2>@ViewBag.BlogCount</h2>
+            <a asp-area="Admin" asp-controller="BlogPosts" asp-action="Index">Manage &rarr;</a>
+        </div>
+    </div>
+     <div class="col-md-3 mb-20">
+        <div class="admin-card stat-card">
+            <span>Students Representatives</span>
+            <h2>@ViewBag.StudentCount</h2>
+            <a asp-area="Admin" asp-controller="Student" asp-action="Index">Manage &rarr;</a>
+        </div>
+    </div>
+</div>
+
+<div class="admin-card mt-10">
+    <h5>Welcome</h5>
+    <p class="text-muted mb-0">
+        Use the sidebar to add, edit or remove teachers, courses, events and blog posts.
+        Changes appear on the public site immediately.
+    </p>
+</div>

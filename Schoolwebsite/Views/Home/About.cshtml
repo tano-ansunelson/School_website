@@ -1,0 +1,120 @@
+﻿@using Microsoft.Extensions.Options
+@inject IOptions<SchoolInfo> SchoolInfoOptions
+@{
+    ViewData["Title"] = "About Us";
+    var school = SchoolInfoOptions.Value;
+    var teachers = ViewBag.FeaturedTeachers as List<Teacher>;
+}
+
+<!--====== PAGE BANNER PART START ======-->
+
+<section id="page-banner" class="pt-105 pb-110 bg_cover" data-overlay="8" style="background-image: url(@Url.Content("~/images/page-banner-1.jpg"))">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="page-banner-cont">
+                    <h2>About Us</h2>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">About Us</li>
+                        </ol>
+                    </nav>
+                </div>  <!-- page banner cont -->
+            </div>
+        </div> <!-- row -->
+    </div> <!-- container -->
+</section>
+
+<!--====== PAGE BANNER PART ENDS ======-->
+<!--====== ABOUT PART START ======-->
+
+<section id="about-page" class="pt-70 pb-110">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-5">
+                <div class="section-title mt-50">
+                    <h5>About us</h5>
+                    <h2>Welcome to @school.ShortName</h2>
+                </div> <!-- section title -->
+                <div class="about-cont">
+                    <p>
+                        @school.Name was established to provide affordable, quality secondary education
+                        to students in our community. We combine strong academics with discipline, sports
+                        and extracurricular activities to develop well-rounded graduates.
+                        <br /> <br />
+                        Our vision is a school where every student, regardless of background, has the
+                        support and opportunity to reach their full potential.
+                    </p>
+                </div>
+            </div> <!-- about cont -->
+            <div class="col-lg-7">
+                <div class="about-image mt-50">
+                    <img src="~/images/about/about-2.jpg" alt="About @school.ShortName">
+                </div>  <!-- about image -->
+            </div>
+        </div> <!-- row -->
+        <div class="about-items pt-60">
+            <div class="row justify-content-center">
+                <div class="col-lg-4 col-md-6 col-sm-10">
+                    <div class="about-singel-items mt-30">
+                        <span>01</span>
+                        <h4>Why Choose Us</h4>
+                        <p>Experienced teachers, a safe campus, and a track record of strong WASSCE results.</p>
+                    </div> <!-- about singel -->
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-10">
+                    <div class="about-singel-items mt-30">
+                        <span>02</span>
+                        <h4>Our Mission</h4>
+                        <p>To provide quality, well-rounded education that prepares students for tertiary education and life.</p>
+                    </div> <!-- about singel -->
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-10">
+                    <div class="about-singel-items mt-30">
+                        <span>03</span>
+                        <h4>Our Vision</h4>
+                        <p>To be a leading senior high school known for academic excellence and strong character.</p>
+                    </div> <!-- about singel -->
+                </div>
+            </div> <!-- row -->
+        </div> <!-- about items -->
+    </div> <!-- container -->
+</section>
+
+<!--====== ABOUT PART ENDS ======-->
+<!--====== TEACHERS PART START ======-->
+
+<section id="teachers-part" class="pt-65 pb-120 gray-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-5">
+                <div class="section-title mt-50 pb-35">
+                    <h5>Featured Teachers</h5>
+                    <h2>Meet Our Teachers</h2>
+                </div> <!-- section title -->
+            </div>
+        </div> <!-- row -->
+        <div class="row">
+            @if (teachers != null)
+            {
+                @foreach (var teacher in teachers)
+                {
+                    <div class="col-lg-3 col-sm-6">
+                        <div class="singel-teachers mt-30 text-center">
+                            <div class="image">
+                                <img src="@teacher.ImagePath" alt="@teacher.Name">
+                            </div>
+                            <div class="cont">
+                                <a asp-controller="Teachers" asp-action="Details" asp-route-id=""><h6>@teacher.Name</h6></a>
+                                <span>@teacher.Role</span>
+                            </div>
+                        </div> <!-- singel teachers -->
+                    </div>
+                }
+            }
+        </div> <!-- row -->
+    </div> <!-- container -->
+</section>
+
+<!--====== TEACHERS PART ENDS ======-->

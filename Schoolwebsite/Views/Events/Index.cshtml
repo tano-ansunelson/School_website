@@ -1,0 +1,146 @@
+﻿@using Schoolwebsite.Models
+@model List<SchoolEvent>
+@{
+    ViewData["Title"] = "Events";
+    int currentPage = ViewBag.CurrentPage;
+    int totalPages = ViewBag.TotalPages;
+}
+
+<!--====== PAGE BANNER PART START ======-->
+
+<section id="page-banner" class="pt-105 pb-110 bg_cover" data-overlay="8" style="background-image: url(@Url.Content("~/images/page-banner-3.jpg"))">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="page-banner-cont">
+                    <h2>Events</h2>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Events</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--====== PAGE BANNER PART ENDS ======-->
+<!--====== EVENTS PART START ======-->
+
+<section id="events-page" class="pt-90 pb-120 gray-bg">
+    <div class="container">
+        <div class="row">
+            @if (!Model.Any())
+            {
+                <div class="col-lg-12 text-center pt-30 pb-30">
+                    <p class="text-muted">No events scheduled yet.</p>
+                </div>
+            }
+            @foreach (var ev in Model)
+            {
+                <div class="col-lg-6">
+                    <div class="event-card mt-30">
+                        <div class="event-card-thumb">
+                            <img src="@(string.IsNullOrEmpty(ev.ImagePath) ? "/images/no-photo.png" : ev.ImagePath)" alt="@ev.Title">
+                        </div>
+                        <div class="event-card-cont">
+                            <span class="event-date"><i class="fa fa-calendar"></i> @ev.Date.ToString("d MMMM yyyy")</span>
+                            <a asp-controller="Events" asp-action="Details" asp-route-id="@ev.SchoolEventId">
+                                <h4>@ev.Title</h4>
+                            </a>
+                            <div class="event-meta">
+                                <span><i class="fa fa-clock-o"></i> @ev.StartTime - @ev.EndTime</span>
+                                <span><i class="fa fa-map-marker"></i> @ev.Location</span>
+                            </div>
+                            <p>@ev.Summary</p>
+                        </div>
+                    </div> <!-- event card -->
+                </div>
+            }
+        </div> <!-- row -->
+        @if (totalPages > 1)
+        {
+            <nav aria-label="Events pagination" class="mt-40">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item @(currentPage == 1 ? "disabled" : "")">
+                        <a class="page-link" asp-action="Index" asp-route-page="@(currentPage - 1)" aria-label="Previous">
+                            <i class="fa fa-angle-left"></i>
+                        </a>
+                    </li>
+
+                    @for (int i = 1; i <= totalPages; i++)
+                    {
+                        <li class="page-item @(i == currentPage ? "active" : "")">
+                            <a class="page-link" asp-action="Index" asp-route-page="@i">@i</a>
+                        </li>
+                    }
+
+                    <li class="page-item @(currentPage == totalPages ? "disabled" : "")">
+                        <a class="page-link" asp-action="Index" asp-route-page="@(currentPage + 1)" aria-label="Next">
+                            <i class="fa fa-angle-right"></i>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        }
+    </div> <!-- container -->
+</section>
+
+<!--====== EVENTS PART ENDS ======-->
+@* @using Schoolwebsite.Models
+@model List<SchoolEvent>
+@{
+    ViewData["Title"] = "Events";
+}
+
+<!--====== PAGE BANNER PART START ======-->
+
+<section id="page-banner" class="pt-105 pb-110 bg_cover" data-overlay="8" style="background-image: url(@Url.Content("~/images/page-banner-3.jpg"))">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="page-banner-cont">
+                    <h2>Events</h2>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Events</li>
+                        </ol>
+                    </nav>
+                </div>  <!-- page banner cont -->
+            </div>
+        </div> <!-- row -->
+    </div> <!-- container -->
+</section>
+
+<!--====== PAGE BANNER PART ENDS ======-->
+<!--====== EVENTS PART START ======-->
+
+<section id="events-page" class="pt-90 pb-120 gray-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2">
+                @foreach (var ev in Model)
+                {
+                    <div class="singel-event-list mt-30">
+                        <div class="event-thum">
+                            <img src="@ev.ImagePath" alt="@ev.Title">
+                        </div>
+                        <div class="event-cont">
+                            <span><i class="fa fa-calendar"></i>@ev.Date.ToString("dd MMM yyyy")</span>
+                            <span><i class="fa fa-clock-o"></i>@ev.StartTime - @ev.EndTime</span>
+                            <span><i class="fa fa-map-marker"></i>@ev.Location</span>
+                            <a asp-controller="Events" asp-action="Details" asp-route-id="@ev.SchoolEventId"><h4>@ev.Title</h4></a>
+                            <p>@ev.Summary</p>
+                        </div>
+                    </div> <!-- singel event list -->
+                }
+            </div>
+        </div> <!-- row -->
+    </div> <!-- container -->
+</section>
+
+<!--====== EVENTS PART ENDS ======-->
+ *@

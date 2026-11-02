@@ -1,0 +1,43 @@
+﻿@using Microsoft.Extensions.Options
+@inject IOptions<SchoolInfo> SchoolInfoOptions
+@{
+    ViewData["Title"] = "Privacy Policy";
+    var school = SchoolInfoOptions.Value;
+}
+
+<section id="page-banner" class="pt-105 pb-110 bg_cover" data-overlay="8" style="background-image: url(@Url.Content("~/images/page-banner-1.jpg"))">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="page-banner-cont">
+                    <h2>Privacy Policy</h2>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Privacy Policy</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="pt-90 pb-120">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 offset-lg-1">
+                <h2>Privacy Policy</h2>
+                <p class="mt-20">
+                    @school.Name respects the privacy of visitors to this website. Information submitted
+                    through the contact form (name, email, phone number and message) is used only to
+                    respond to your enquiry and is not shared with third parties.
+                </p>
+                <p>
+                    This page is a placeholder. Update it with your school's actual privacy policy before
+                    this site goes live.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>

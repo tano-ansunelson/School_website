@@ -1,0 +1,91 @@
+﻿@model BlogPost
+@using Schoolwebsite.Helpers
+@{
+    ViewData["Title"] = Model.Title;
+    var recentPosts = ViewBag.RecentPosts as List<BlogPost>;
+}
+
+<!--====== PAGE BANNER PART START ======-->
+
+<section id="page-banner" class="pt-105 pb-130 bg_cover" data-overlay="8" style="background-image: url(@Url.Content("~/images/page-banner-4.jpg"))">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="page-banner-cont">
+                    <h2>@Model.Title</h2>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+                            <li class="breadcrumb-item"><a asp-controller="Blog" asp-action="Index">Blog</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">@Model.Title</li>
+                        </ol>
+                    </nav>
+                </div>  <!-- page banner cont -->
+            </div>
+        </div> <!-- row -->
+    </div> <!-- container -->
+</section>
+
+<!--====== PAGE BANNER PART ENDS ======-->
+<!--====== BLOG PART START ======-->
+
+<section id="blog-singel" class="pt-90 pb-120 gray-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="blog-details mt-30">
+                    <div class="thum">
+                        <img src="@Model.ImagePath" alt="@Model.Title">
+                    </div>
+                    <div class="cont">
+                        <h3>@Model.Title</h3>
+                        <ul>
+                            <li><a href="#"><i class="fa fa-calendar"></i>@Model.Date.ToString("dd MMM yyyy")</a></li>
+                            <li><a href="#"><i class="fa fa-user"></i>@Model.Author</a></li>
+                            <li><a href="#"><i class="fa fa-tags"></i>@Model.Category</a></li>
+                        </ul>
+                        @foreach (var paragraph in Model.Body.ToLines())
+                        {
+                            <p>@paragraph</p>
+                        }
+                    </div>
+                </div> <!-- blog details -->
+            </div>
+            <div class="col-lg-4">
+                <div class="saidbar">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="saidbar-post mt-30">
+                                <h4>More Posts</h4>
+                                <ul>
+                                    @if (recentPosts != null)
+                                    {
+                                        @foreach (var post in recentPosts)
+                                        {
+                                            <li>
+                                                <a asp-controller="Blog" asp-action="Details" asp-route-id="@post.BlogPostId">
+                                                    <div class="singel-post">
+                                                        <div class="thum">
+                                                            <img src="@post.ImagePath" alt="@post.Title">
+                                                        </div>
+                                                        <div class="cont">
+                                                            <h6>@post.Title</h6>
+                                                            <span>@post.Date.ToString("dd MMM yyyy")</span>
+                                                        </div>
+                                                    </div> <!-- singel post -->
+                                                </a>
+                                            </li>
+                                        }
+                                    }
+                                </ul>
+                            </div> <!-- saidbar post -->
+                        </div>
+                    </div> <!-- row -->
+                </div> <!-- saidbar -->
+            </div>
+        </div> <!-- row -->
+    </div> <!-- container -->
+</section>
+
+<!--====== BLOG PART ENDS ======-->
+

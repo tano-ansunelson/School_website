@@ -1,0 +1,157 @@
+﻿@model Course
+@using Schoolwebsite.Helpers
+
+@{
+    ViewData["Title"] = Model.Title;
+  
+    var otherCourses = ViewBag.OtherCourses as List<Course>;
+}
+
+<!--====== PAGE BANNER PART START ======-->
+
+<section id="page-banner" class="pt-105 pb-110 bg_cover" data-overlay="8" style="background-image: url(@Url.Content("~/images/page-banner-2.jpg"))">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="page-banner-cont">
+                    <h2>@Model.Title</h2>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+                            <li class="breadcrumb-item"><a asp-controller="Courses" asp-action="Index">Courses</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">@Model.Title</li>
+                        </ol>
+                    </nav>
+                </div>  <!-- page banner cont -->
+            </div>
+        </div> <!-- row -->
+    </div> <!-- container -->
+</section>
+
+<!--====== PAGE BANNER PART ENDS ======-->
+<!--====== COURSES SINGEl PART START ======-->
+
+<section id="corses-singel" class="pt-90 pb-120 gray-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="corses-singel-left mt-30">
+                    <div class="title">
+                        <h3>@Model.Title</h3>
+                    </div> <!-- title -->
+                    <div class="course-terms">
+                        <ul>
+                            @* @if (coordinator != null)
+                            {
+                                <li>
+                                    <div class="teacher-name">
+                                        <div class="thum">
+                                            <img src="@coordinator.ImagePath" alt="@coordinator.Name">
+                                        </div>
+                                        <div class="name">
+                                            <span>Coordinator</span>
+                                            <a asp-controller="Teachers" asp-action="Details" asp-route-id=""><h6>@coordinator.Name</h6></a>
+                                        </div>
+                                 </   </div>
+                                li>
+                            } *@
+                            <li>
+                             @*    <div class="course-category">
+                                    <span>Category</span>
+                                    <h6>@Model.Category</h6>
+                                </div> *@
+                            </li>
+                            <li>
+                                <div class="course-category">
+                                    <span>Duration</span>
+                                    <h6>@Model.Duration</h6>
+                                </div>
+                            </li>
+                        </ul>
+                    </div> <!-- course terms -->
+
+                    <div class="corses-singel-image pt-50">
+                        <img src="@Model.ImagePath" alt="@Model.Title">
+                    </div> <!-- corses singel image -->
+
+                    <div class="corses-tab mt-30">
+                        <ul class="nav nav-justified" id="courseTab" role="tablist">
+                            <li class="nav-item">
+                                <a class="active" id="overview-tab" data-toggle="tab" href="#overview" role="tab" aria-controls="overview" aria-selected="true">Overview</a>
+                            </li>
+                            <li class="nav-item">
+                                <a id="subjects-tab" data-toggle="tab" href="#subjects" role="tab" aria-controls="subjects" aria-selected="false">Subjects</a>
+                            </li>
+                            <li class="nav-item">
+                                <a id="requirements-tab" data-toggle="tab" href="#requirements" role="tab" aria-controls="requirements" aria-selected="false">Requirements</a>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content pt-30" id="courseTabContent">
+                            <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview-tab">
+                                @foreach (var paragraph in Model.Overview.ToLines())
+                                {
+                                    <p>@paragraph</p>
+                                }
+                            </div>
+                            <div class="tab-pane fade" id="subjects" role="tabpanel" aria-labelledby="subjects-tab">
+                                <h5>Core Subjects</h5>
+                                <ul class="mt-15 mb-25">
+                                    @foreach (var subject in Model.CoreSubjects.ToLines())
+                                    {
+                                        <li><i class="fa fa-check-circle mr-10"></i>@subject</li>
+                                    }
+                                </ul>
+                                <h5>Elective Subjects</h5>
+                                <ul class="mt-15">
+                                    @foreach (var subject in Model.ElectiveSubjects.ToLines())
+                                    {
+                                        <li><i class="fa fa-check-circle mr-10"></i>@subject</li>
+                                    }
+                                </ul>
+                            </div>
+                            <div class="tab-pane fade" id="requirements" role="tabpanel" aria-labelledby="requirements-tab">
+                                <ul>
+                                    @foreach (var req in Model.EntryRequirements.ToLines())
+                                    {
+                                        <li class="mb-10"><i class="fa fa-info-circle mr-10"></i>@req</li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    </div> <!-- corses tab -->
+                </div> <!-- corses singel left -->
+            </div>
+            <div class="col-lg-4">
+                <div class="saidbar">
+                    <div class="saidbar-post mt-30">
+                        <h4>Other Programmes</h4>
+                        <ul>
+                            @if (otherCourses != null)
+                            {
+                                @foreach (var c in otherCourses)
+                                {
+                                    <li>
+                                        <a asp-controller="Courses" asp-action="Details" asp-route-id="@c.CourseId">
+                                            <div class="singel-post">
+                                                <div class="thum">
+                                                    <img src="@c.ImagePath" alt="@c.Title">
+                                                </div>
+                                                <div class="cont">
+                                                    <h6>@c.Title</h6>
+                                                   @*  <span>@c.Category</span> *@
+                                                </div>
+                                            </div> <!-- singel post -->
+                                        </a>
+                                    </li>
+                                }
+                            }
+                        </ul>
+                    </div> <!-- saidbar post -->
+                </div> <!-- saidbar -->
+            </div>
+        </div> <!-- row -->
+    </div> <!-- container -->
+</section>
+
+<!--====== COURSES SINGEl PART ENDS ======-->

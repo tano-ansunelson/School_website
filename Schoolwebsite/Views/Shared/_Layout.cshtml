@@ -1,0 +1,535 @@
+﻿@using Microsoft.Extensions.Options
+@inject IOptions<SchoolInfo> SchoolInfoOptions
+@{
+    var school = SchoolInfoOptions.Value;
+    string currentController = ViewContext.RouteData.Values["controller"]?.ToString() ?? "";
+    string currentAction = ViewContext.RouteData.Values["action"]?.ToString() ?? "";
+    Func<string, string, string> navActive = (controller, action) =>
+        (currentController == controller && currentAction == action) ? "active" : "";
+}
+<!doctype html>
+<html lang="en">
+<head>
+    <style>
+            .navbar-nav li.has-submenu {
+                position: relative;
+            }
+
+                .navbar-nav li.has-submenu > ul.sub-menu {
+                    display: none;
+                    position: absolute;
+                    top: 100%;
+                    left: 0;
+                    min-width: 200px;
+                    margin: 0;
+                    padding: 10px 0;
+                    list-style: none;
+                    background: #fff;
+                    border-radius: 4px;
+                    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+                    z-index: 999;
+                }
+
+            @@media (min-width: 992px) {
+                .navbar-nav li.has-submenu:hover > ul.sub-menu {
+                    display: block;
+                }
+            }
+
+            .navbar-nav li.has-submenu > ul.sub-menu li a {
+                display: block;
+                padding: 8px 22px;
+                font-size: 14px;
+                color: #222;
+                white-space: nowrap;
+                transition: all 0.2s ease;
+            }
+
+                .navbar-nav li.has-submenu > ul.sub-menu li a:hover {
+                    background: #f6f6f6;
+                    color: #07294d;
+                    padding-left: 27px;
+                }
+
+            .navbar-nav li.has-submenu > a::after {
+                content: '\f107';
+                font-family: 'FontAwesome';
+                font-size: 12px;
+                margin-left: 6px;
+            }
+
+            .singel-teachers .image {
+    width: 100%;
+    aspect-ratio: 3 / 4;      /* consistent portrait ratio for every card */
+    overflow: hidden;
+    border-radius: 6px;
+}
+
+.singel-teachers .image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;        /* crops to fill the box instead of stretching */
+    object-position: top;     /* keeps faces near the top instead of centering awkwardly */
+    display: block;
+}
+/*pagination*/
+
+            .event-card {
+                background: #fff;
+                border-radius: 6px;
+                overflow: hidden;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+                display: flex;
+                align-items: stretch;
+            }
+
+            .event-card-thumb {
+                flex: 0 0 180px;
+                overflow: hidden;
+            }
+
+                .event-card-thumb img {
+                    width: 100%;
+                    height: 100%;
+                    min-height: 180px;
+                    object-fit: cover;
+                    display: block;
+                }
+
+            .event-card-cont {
+                padding: 20px 22px;
+                flex: 1;
+            }
+
+                .event-card-cont .event-date {
+                    display: block;
+                    font-size: 13px;
+                    color: #f5a623;
+                    font-weight: 500;
+                    margin-bottom: 8px;
+                }
+
+                    .event-card-cont .event-date i {
+                        margin-right: 5px;
+                    }
+
+                .event-card-cont h4 {
+                    font-size: 18px;
+                    font-weight: 700;
+                    color: #1a1a1a;
+                    margin-bottom: 10px;
+                }
+
+                .event-card-cont .event-meta {
+                    display: flex;
+                    gap: 16px;
+                    flex-wrap: wrap;
+                    font-size: 13px;
+                    color: #888;
+                    margin-bottom: 10px;
+                }
+
+                    .event-card-cont .event-meta i {
+                        color: #f5a623;
+                        margin-right: 4px;
+                    }
+
+                .event-card-cont p {
+                    font-size: 14px;
+                    color: #666;
+                    margin-bottom: 0;
+                    line-height: 1.6;
+                }
+
+            /* Pagination */
+            .pagination .page-item .page-link {
+                width: 40px;
+                height: 40px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 6px;
+                border: 1px solid #e2e2e2;
+                color: #333;
+                margin: 0 4px;
+                padding: 0;
+            }
+
+            .pagination .page-item.active .page-link {
+                background-color: #f5a623;
+                border-color: #f5a623;
+                color: #fff;
+            }
+
+            .pagination .page-item.disabled .page-link {
+                color: #ccc;
+                pointer-events: none;
+            }
+
+            .singel-blog .blog-thum {
+                height: 320px;
+                overflow: hidden;
+                border-radius: 6px;
+            }
+
+                .singel-blog .blog-thum img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    display: block;
+                }
+
+            .singel-blog .blog-cont {
+                padding: 24px 5px 0;
+            }
+
+                .singel-blog .blog-cont h4 {
+                    font-size: 20px;
+                    margin-bottom: 10px;
+                }
+
+                .singel-blog .blog-cont ul {
+                    display: flex;
+                    gap: 18px;
+                    flex-wrap: wrap;
+                    padding: 0;
+                    margin-bottom: 12px;
+                    list-style: none;
+                }
+
+                    .singel-blog .blog-cont ul li {
+                        font-size: 13px;
+                        color: #888;
+                    }
+
+                        .singel-blog .blog-cont ul li i {
+                            color: #f5a623;
+                            margin-right: 5px;
+                        }
+
+                .singel-blog .blog-cont p {
+                    font-size: 14px;
+                    color: #666;
+                    line-height: 1.7;
+                    margin-bottom: 0;
+                }
+
+          /*   /* pagination - reuse same style as events page */
+            .pagination .page-item .page-link {
+                width: 40px;
+                height: 40px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 6px;
+                border: 1px solid #e2e2e2;
+                color: #333;
+                margin-right: 6px;
+                padding: 0;
+            }
+
+            .pagination .page-item.active .page-link {
+                background-color: #f5a623;
+                border-color: #f5a623;
+                color: #fff;
+            }
+
+            .pagination .page-item.disabled .page-link {
+                color: #ccc;
+                pointer-events: none;
+            } */
+    </style>
+
+    <!--====== Required meta tags ======-->
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="description" content="@school.Name - @school.Tagline">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!--====== Title ======-->
+    <title>@ViewData["Title"] - @school.ShortName</title>
+
+    <!--====== Favicon Icon ======-->
+    <link rel="shortcut icon" href="~/images/favicon.png" type="image/png">
+
+    <!--====== Animate css ======-->
+    <link rel="stylesheet" href="~/css/animate.css">
+
+    <!--====== Bootstrap css ======-->
+    <link rel="stylesheet" href="~/css/bootstrap.min.css">
+
+    <!--====== Fontawesome css ======-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  @*   <link rel="stylesheet" href="~/css/font-awesome.min.css"> *@
+
+    <!--====== Default css ======-->
+    <link rel="stylesheet" href="~/css/default.css">
+
+    <!--====== Style css ======-->
+    <link rel="stylesheet" href="~/css/style.css">
+
+    <!--====== Responsive css ======-->
+    <link rel="stylesheet" href="~/css/responsive.css">
+
+</head>
+
+<body>
+
+    <!--====== PRELOADER PART START ======-->
+
+    <div class="preloader">
+        <div class="loader rubix-cube">
+            <div class="layer layer-1"></div>
+            <div class="layer layer-2"></div>
+            <div class="layer layer-3 color-1"></div>
+            <div class="layer layer-4"></div>
+            <div class="layer layer-5"></div>
+            <div class="layer layer-6"></div>
+            <div class="layer layer-7"></div>
+            <div class="layer layer-8"></div>
+        </div>
+    </div>
+
+    <!--====== PRELOADER PART ENDS ======-->
+
+    <!--====== HEADER PART START ======-->
+
+    <header id="header-part">
+
+        <div class="header-top d-none d-lg-block">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="header-contact text-lg-left text-center">
+                            <ul>
+                                <li><i class="fa fa-map-marker"></i><span>@school.Address</span></li>
+                                <li><i class="fa fa-envelope-o"></i><span>@school.Email</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="header-opening-time text-lg-right text-center">
+                            <p>@school.OpeningHours</p>
+                        </div>
+                    </div>
+                </div> <!-- row -->
+            </div> <!-- container -->
+        </div> <!-- header top -->
+
+        <div class="header-logo-support pt-30 pb-30">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4 col-md-4">
+                        <div class="logo">
+                            <a asp-controller="Home" asp-action="Index">
+                                <img src="~/images/logo (1).jpg" alt="@school.ShortName Logo" style="width:60px; height:auto;">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-8 col-md-8">
+                        <div class="support-button float-right d-none d-md-block">
+                            <div class="support float-left">
+                                <div class="icon">
+                                    <i class="fa fa-phone"></i>
+                                </div>
+                                <div class="cont">
+                                    <p>Need help? Call us</p>
+                                    <span>@school.Phone</span>
+                                </div>
+                            </div>
+                            <div class="button float-left">
+                                <a asp-controller="Home" asp-action="Contact" class="main-btn">Contact Us</a>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- row -->
+            </div> <!-- container -->
+        </div> <!-- header logo support -->
+
+        <div class="navigation">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <nav class="navbar navbar-expand-lg">
+                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+
+                            <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
+                                <ul class="navbar-nav mr-auto">
+                                    <li class="nav-item">
+                                        <a class="@navActive("Home", "Index")" asp-controller="Home" asp-action="Index">Home</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="@navActive("Home", "About")" asp-controller="Home" asp-action="About">About Us</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="@navActive("Courses", "Index")" asp-controller="Courses" asp-action="Index">Courses</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="@navActive("Events", "Index")" asp-controller="Events" asp-action="Index">Events</a>
+                                @*     </li>
+                                    <li class="nav-item">
+                                        <a class="@navActive("Teachers", "Index")" asp-controller="Teachers" asp-action="Index">Our Teachers</a>
+                                    </li> *@
+                                        <li class="nav-item has-submenu">
+                                            <a class="@navActive("Teachers", "Index")" asp-controller="Teachers" asp-action="Index">Our Staff</a>
+                                            <ul class="sub-menu">
+                                                <li><a asp-controller="Teachers" asp-action="Index">All</a></li>
+                                                <li><a asp-controller="Teachers" asp-action="Index" asp-route-category="administration">Administration</a></li>
+                                                <li><a asp-controller="Teachers" asp-action="Index" asp-route-category="hod">HOD</a></li>
+                                                <li><a asp-controller="Teachers" asp-action="Index" asp-route-category="housemaster">House Masters</a></li>
+                                                <li><a asp-controller="Teachers" asp-action="Index" asp-route-category="teacher">Teacher</a></li>
+                                            </ul>
+                                        </li>
+                                    <li class="nav-item">
+                                        <a class="@navActive("Blog", "Index")" asp-controller="Blog" asp-action="Index">Blog</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="@navActive("Home", "Contact")" asp-controller="Home" asp-action="Contact">Contact</a>
+                                    </li>
+                                        <li class="nav-item">
+                                            <a class="@navActive("Student", "Student")" asp-controller="Student" asp-action="Index">Student</a>
+                                        </li>
+                                </ul>
+                            </div>
+                        </nav> <!-- nav -->
+                    </div>
+                </div> <!-- row -->
+            </div> <!-- container -->
+        </div>
+
+    </header>
+
+    <!--====== HEADER PART ENDS ======-->
+
+    @RenderBody()
+
+    <!--====== FOOTER PART START ======-->
+
+    <footer id="footer-part">
+        <div class="footer-top pt-40 pb-70">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4 col-md-6">
+                        <div class="footer-about mt-40">
+                            <div class="logo">
+                                   
+                                    <a asp-controller="Home" asp-action="Index"><img src="~/images/logo (1).jpg" alt="@school.ShortName Logo" style="width:50px;height:auto;"></a>
+                            </div>
+                            <p>@school.Name is committed to academic excellence, discipline and the holistic development of every student.</p>
+                            <ul class="mt-20">
+                                <li><a href="@school.FacebookUrl"><i class="fa fa-facebook-f"></i></a></li>
+                                <li><a href="@school.TwitterUrl"><i class="fa fa-twitter"></i></a></li>
+                                <li><a href="@school.InstagramUrl"><i class="fa fa-instagram"></i></a></li>
+                            </ul>
+                        </div> <!-- footer about -->
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                        <div class="footer-link mt-40">
+                            <div class="footer-title pb-25">
+                                <h6>Sitemap</h6>
+                            </div>
+                            <ul>
+                                <li><a asp-controller="Home" asp-action="Index"><i class="fa fa-angle-right"></i>Home</a></li>
+                                <li><a asp-controller="Home" asp-action="About"><i class="fa fa-angle-right"></i>About us</a></li>
+                                <li><a asp-controller="Courses" asp-action="Index"><i class="fa fa-angle-right"></i>Courses</a></li>
+                                <li><a asp-controller="Events" asp-action="Index"><i class="fa fa-angle-right"></i>Events</a></li>
+                            </ul>
+                            <ul>
+                                <li><a asp-controller="Teachers" asp-action="Index"><i class="fa fa-angle-right"></i>Teachers</a></li>
+                                 <li><a asp-controller="Student" asp-action="Index"><i class="fa fa-angle-right"></i>Students</a></li>
+                                <li><a asp-controller="Blog" asp-action="Index"><i class="fa fa-angle-right"></i>Blog</a></li>
+                                <li><a asp-controller="Home" asp-action="Contact"><i class="fa fa-angle-right"></i>Contact</a></li>
+                            </ul>
+                        </div> <!-- footer link -->
+                    </div>
+                    <div class="col-lg-2 col-md-6 col-sm-6">
+                        <div class="footer-link support mt-40">
+                            <div class="footer-title pb-25">
+                                <h6>Support</h6>
+                            </div>
+                            <ul>
+                                <li><a asp-controller="Home" asp-action="Contact"><i class="fa fa-angle-right"></i>FAQs</a></li>
+                                <li><a asp-controller="Home" asp-action="Privacy"><i class="fa fa-angle-right"></i>Privacy</a></li>
+                            </ul>
+                        </div> <!-- support -->
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="footer-address mt-40">
+                            <div class="footer-title pb-25">
+                                <h6>Contact Us</h6>
+                            </div>
+                            <ul>
+                                <li>
+                                    <div class="icon">
+                                        <i class="fa fa-home"></i>
+                                    </div>
+                                    <div class="cont">
+                                        <p>@school.Address</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="icon">
+                                        <i class="fa fa-phone"></i>
+                                    </div>
+                                    <div class="cont">
+                                        <p>@school.Phone</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="icon">
+                                        <i class="fa fa-envelope-o"></i>
+                                    </div>
+                                    <div class="cont">
+                                        <p>@school.Email</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div> <!-- footer address -->
+                    </div>
+                </div> <!-- row -->
+            </div> <!-- container -->
+        </div> <!-- footer top -->
+
+        <div class="footer-copyright pt-10 pb-25">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="copyright text-center pt-15">
+                            <p>&copy; @DateTime.Now.Year @school.Name. All rights reserved.</p>
+                        </div>
+                    </div>
+                </div> <!-- row -->
+            </div> <!-- container -->
+        </div> <!-- footer copyright -->
+    </footer>
+
+    <!--====== FOOTER PART ENDS ======-->
+
+    <!--====== BACK TO TOP PART START ======-->
+
+    <a href="#" class="back-to-top"><i class="fa fa-angle-up"></i></a>
+
+    <!--====== BACK TO TOP PART ENDS ======-->
+
+    <!--====== jquery js ======-->
+    <script src="~/js/vendor/modernizr-3.6.0.min.js"></script>
+    <script src="~/js/vendor/jquery-1.12.4.min.js"></script>
+
+    <!--====== Bootstrap bundle js (includes Popper) ======-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.2/js/bootstrap.bundle.min.js"></script>
+
+    <!--====== Main js (site behaviour: preloader, sticky nav, mobile menu, back to top) ======-->
+    <script src="~/js/main.js"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+
+    </body>
+</html>
+
+
+
+

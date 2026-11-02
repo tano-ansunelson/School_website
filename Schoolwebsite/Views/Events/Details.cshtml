@@ -1,0 +1,119 @@
+﻿@model SchoolEvent
+@using Schoolwebsite.Helpers
+@{
+    ViewData["Title"] = Model.Title;
+    var otherEvents = ViewBag.OtherEvents as List<SchoolEvent>;
+}
+
+<!--====== PAGE BANNER PART START ======-->
+
+<section id="page-banner" class="pt-105 pb-110 bg_cover" data-overlay="8" style="background-image: url(@Url.Content("~/images/page-banner-3.jpg"))">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="page-banner-cont">
+                    <h2>@Model.Title</h2>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+                            <li class="breadcrumb-item"><a asp-controller="Events" asp-action="Index">Events</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">@Model.Title</li>
+                        </ol>
+                    </nav>
+                </div> <!-- page banner cont -->
+            </div>
+        </div> <!-- row -->
+    </div> <!-- container -->
+</section>
+
+<!--====== PAGE BANNER PART ENDS ======-->
+<!--====== EVENTS PART START ======-->
+
+<section id="event-singel" class="pt-90 pb-120 gray-bg">
+    <div class="container">
+        <div class="events-area">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="events-left">
+                        <h3>@Model.Title</h3>
+                        <a href="#"><span><i class="fa fa-calendar"></i> @Model.Date.ToString("dd MMMM yyyy")</span></a>
+                        <a href="#"><span><i class="fa fa-clock-o"></i> @Model.StartTime - @Model.EndTime</span></a>
+                        <a href="#"><span><i class="fa fa-map-marker"></i> @Model.Location</span></a>
+                        <img src="@Model.ImagePath" alt="@Model.Title">
+                        @foreach (var paragraph in Model.Body.ToLines())
+                        {
+                            <p>@paragraph</p>
+                        }
+                    </div> <!-- events left -->
+                </div>
+                <div class="col-lg-4">
+                    <div class="events-right">
+                        <div class="events-address mt-30">
+                            <ul>
+                                <li>
+                                    <div class="singel-address">
+                                        <div class="icon">
+                                            <i class="fa fa-clock-o"></i>
+                                        </div>
+                                        <div class="cont">
+                                            <h6>Start Time</h6>
+                                            <span>@Model.StartTime</span>
+                                        </div>
+                                    </div> <!-- singel address -->
+                                </li>
+                                <li>
+                                    <div class="singel-address">
+                                        <div class="icon">
+                                            <i class="fa fa-bell-slash"></i>
+                                        </div>
+                                        <div class="cont">
+                                            <h6>Finish Time</h6>
+                                            <span>@Model.EndTime</span>
+                                        </div>
+                                    </div> <!-- singel address -->
+                                </li>
+                                <li>
+                                    <div class="singel-address">
+                                        <div class="icon">
+                                            <i class="fa fa-map"></i>
+                                        </div>
+                                        <div class="cont">
+                                            <h6>Location</h6>
+                                            <span>@Model.Location</span>
+                                        </div>
+                                    </div> <!-- singel address -->
+                                </li>
+                            </ul>
+                        </div> <!-- events address -->
+                        @if (otherEvents != null && otherEvents.Any())
+                        {
+                            <div class="saidbar-post mt-30">
+                                <h4>Other Events</h4>
+                                <ul>
+                                    @foreach (var ev in otherEvents)
+                                    {
+                                        <li>
+                                            <a asp-controller="Events" asp-action="Details" asp-route-id="@ev.SchoolEventId">
+                                                <div class="singel-post">
+                                                    <div class="thum">
+                                                        <img src="@ev.ImagePath" alt="@ev.Title">
+                                                    </div>
+                                                    <div class="cont">
+                                                        <h6>@ev.Title</h6>
+                                                        <span>@ev.Date.ToString("dd MMM yyyy")</span>
+                                                    </div>
+                                                </div> <!-- singel post -->
+                                            </a>
+                                        </li>
+                                    }
+                                </ul>
+                            </div> <!-- saidbar post -->
+                        }
+                    </div> <!-- events right -->
+                </div>
+            </div> <!-- row -->
+        </div> <!-- events-area -->
+    </div> <!-- container -->
+</section>
+
+<!--====== EVENTS PART ENDS ======-->

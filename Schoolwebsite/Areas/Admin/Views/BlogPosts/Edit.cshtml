@@ -1,0 +1,13 @@
+﻿@using Schoolwebsite.ViewModels.Admin
+@model BlogPostViewModel
+@{
+    ViewData["Title"] = "Edit Blog Post";
+}
+
+<div class="admin-card">
+    <partial name="_Form" model="Model" />
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

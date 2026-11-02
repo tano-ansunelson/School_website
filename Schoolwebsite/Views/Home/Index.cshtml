@@ -1,0 +1,335 @@
+﻿@using Schoolwebsite
+@using Microsoft.Extensions.Options
+@inject IOptions<SchoolInfo> SchoolInfoOptions
+@{
+    ViewData["Title"] = "Home";
+    var school = SchoolInfoOptions.Value;
+    var latestPosts = ViewBag.LatestPosts as List<BlogPost>;
+    var teachers = ViewBag.FeaturedTeachers as List<Teacher>;
+    var courses = ViewBag.FeaturedCourses as List<Course>;
+    var events = ViewBag.UpcomingEvents as List<SchoolEvent>;
+}
+
+<!--====== HERO / BANNER PART START ======-->
+
+<section id="hero-part" class="bg_cover pt-150 pb-150" data-overlay="6" style="background-image: url(@Url.Content("~/images/slider/s-1.jpg"))">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-8 col-lg-9">
+                <div class="slider-cont">
+                    <h1>@school.Name</h1>
+                    <p>@school.Tagline Building a strong foundation in academics, character and leadership for every student who walks through our gates.</p>
+                    <ul>
+                        <li><a class="main-btn" asp-controller="Home" asp-action="About">Learn More</a></li>
+                        <li><a class="main-btn main-btn-2" asp-controller="Home" asp-action="Contact">Apply Now</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div> <!-- row -->
+    </div> <!-- container -->
+</section>
+
+<!--====== HERO / BANNER PART ENDS ======-->
+<!--====== ABOUT PART START ======-->
+
+<section id="about-part" class="pt-65 pb-65">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-5">
+                <div class="section-title mt-50">
+                    <h5>About us</h5>
+                    <h2>Welcome to @school.ShortName</h2>
+                </div> <!-- section title -->
+                <div class="about-cont">
+                    <p>
+                        @school.Name is dedicated to providing quality secondary education that prepares
+                        students for WASSCE success and life beyond the classroom. Our dedicated teachers
+                        and modern facilities give every student the support they need to thrive.
+                    </p>
+                    <a asp-controller="Home" asp-action="About" class="main-btn mt-30">Learn More</a>
+                </div>
+            </div> <!-- about cont -->
+            <div class="col-lg-6 offset-lg-1">
+                <div class="about-event bg_cover mt-50" style="background-image: url(@Url.Content("~/images/images.jpg"))">
+                    <div class="event-title">
+                        <h3>Upcoming events</h3>
+                    </div> <!-- event title -->
+                    @if (events != null)
+                    {
+                        @foreach (var ev in events)
+                        {
+                            <div class="singel-event-list">
+                                <div class="event-cont">
+                                    <span><i class="fa fa-calendar"></i>@ev.Date.ToString("dd MMMM yyyy")</span>
+                                    <a asp-controller="Events" asp-action="Details" asp-route-id="@ev.SchoolEventId"><h4>@ev.Title</h4></a>
+                                    <span><i class="fa fa-clock-o"></i>@ev.StartTime - @ev.EndTime</span>
+                                    <span><i class="fa fa-map-marker"></i>@ev.Location</span>
+                                </div>
+                            </div> <!-- singel event list -->
+                        }
+                    }
+                </div> <!-- about event -->
+            </div>
+        </div> <!-- row -->
+    </div> <!-- container -->
+</section>
+
+<!--====== ABOUT PART ENDS ======-->
+<!--====== ABOUT PART START ======-->
+@* <!--====== ABOUT PART START ======-->
+
+<section id="about-part" class="bg_cover pt-65 pb-65" style="background-image: url(@Url.Content("~/images/about/bg-1.png"))">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-5">
+                <div class="section-title mt-50">
+                    <h5>About us</h5>
+                    <h2>Welcome to @school.ShortName</h2>
+                </div> <!-- section title -->
+                <div class="about-cont">
+                    <p>
+                        @school.Name is dedicated to providing quality secondary education that prepares
+                        students for WASSCE success and life beyond the classroom. Our dedicated teachers
+                        and modern facilities give every student the support they need to thrive.
+                    </p>
+                    <a asp-controller="Home" asp-action="About" class="main-btn mt-30">Learn More</a>
+                </div>
+            </div> <!-- about cont -->
+            <div class="col-lg-6 offset-lg-1">
+                <div class="about-event mt-50">
+                    <div class="event-title">
+                        <h3>Upcoming events</h3>
+                    </div> <!-- event title -->
+                    @if (events != null)
+                    {
+                        @foreach (var ev in events)
+                        {
+                            <div class="singel-event-list">
+                                <div class="event-cont">
+                                    <span><i class="fa fa-calendar"></i>@ev.Date.ToString("dd MMMM yyyy")</span>
+                                    <a asp-controller="Events" asp-action="Details" asp-route-id="@ev.SchoolEventId"><h4>@ev.Title</h4></a>
+                                    <span><i class="fa fa-clock-o"></i>@ev.StartTime - @ev.EndTime</span>
+                                    <span><i class="fa fa-map-marker"></i>@ev.Location</span>
+                                </div>
+                            </div> <!-- singel event list -->
+                        }
+                    }
+                </div> <!-- about event -->
+            </div>
+        </div> <!-- row -->
+    </div> <!-- container -->
+</section> *@
+
+<!--====== ABOUT PART ENDS ======-->
+@* <section id="about-part" class="pt-65 pb-65">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-5">
+                <div class="section-title mt-50">
+                    <h5>About us</h5>
+                    <h2>Welcome to @school.ShortName</h2>
+                </div> <!-- section title -->
+                <div class="about-cont">
+                    <p>
+                        @school.Name is dedicated to providing quality secondary education that prepares
+                        students for WASSCE success and life beyond the classroom. Our dedicated teachers
+                        and modern facilities give every student the support they need to thrive.
+                    </p>
+                    <a asp-controller="Home" asp-action="About" class="main-btn mt-30">Read More</a>
+                </div>
+            </div> <!-- about cont -->
+            <div class="col-lg-6 offset-lg-1">
+                <div class="about-event mt-50">
+                    <div class="event-title">
+                        <h3>Why choose us</h3>
+                    </div> <!-- event title -->
+                    <ul>
+                        <li>
+                            <div class="singel-event">
+                                <a href="#"><h4><i class="fa fa-check-circle mr-10"></i>Qualified, experienced teaching staff</h4></a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="singel-event">
+                                <a href="#"><h4><i class="fa fa-check-circle mr-10"></i>Strong WASSCE track record</h4></a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="singel-event">
+                                <a href="#"><h4><i class="fa fa-check-circle mr-10"></i>Science, arts, business and general programmes</h4></a>
+                            </div>
+                        </li>
+                    </ul>
+                </div> <!-- about event -->
+            </div>
+        </div> <!-- row -->
+    </div> <!-- container -->
+</section> *@
+
+<!--====== ABOUT PART ENDS ======-->
+<!--====== COURSE PART START ======-->
+
+<section id="course-part" class="pt-65 pb-90 gray-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="section-title pb-45">
+                    <h5>What we offer</h5>
+                    <h2>Our Academic Programmes</h2>
+                </div> <!-- section title -->
+            </div>
+        </div> <!-- row -->
+        <div class="row mt-30">
+            @if (courses != null)
+            {
+                @foreach (var course in courses)
+                {
+                    <div class="col-lg-4 col-md-6">
+                        <div class="singel-course mt-30">
+                            <div class="thum">
+                                <div class="image">
+                                    <img src="@course.ImagePath" alt="@course.Title">
+                                </div>
+                                <div class="price">
+                                    <span>@course.Duration</span>
+                                </div>
+                            </div>
+                            <div class="cont">
+                               @*  <span>@course.Category</span> *@
+                                <a asp-controller="Courses" asp-action="Details" asp-route-id="@course.CourseId"><h4>@course.Title</h4></a>
+                            </div>
+                        </div> <!-- singel course -->
+                    </div>
+                }
+            }
+        </div> <!-- row -->
+        <div class="row">
+            <div class="col-lg-12 text-center mt-20">
+                <a asp-controller="Courses" asp-action="Index" class="main-btn">View All Programmes</a>
+            </div>
+        </div>
+    </div> <!-- container -->
+</section>
+
+<!--====== COURSE PART ENDS ======-->
+
+
+
+@* <!--====== TEACHERS PART START ======-->
+
+<section id="teachers-part" class="pt-70 pb-90 gray-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-5">
+                <div class="section-title mt-50 pb-35">
+                    <h5>Featured Teachers</h5>
+                    <h2>Meet Our Teachers</h2>
+                </div> <!-- section title -->
+            </div>
+        </div> <!-- row -->
+        <div class="row">
+            @if (teachers != null)
+            {
+                @foreach (var teacher in teachers)
+                {
+                    <div class="col-lg-3 col-sm-6">
+                        <div class="singel-teachers mt-30 text-center">
+                            <div class="image">
+                                <img src="@teacher.ImagePath" alt="@teacher.Name">
+                            </div>
+                            <div class="cont">
+                                <a asp-controller="Teachers" asp-action="Details" asp-route-id="@teacher.TeacherId"><h6>@teacher.Name</h6></a>
+                                <span>@teacher.Role</span>
+                            </div>
+                        </div> <!-- singel teachers -->
+                    </div>
+                }
+            }
+        </div> <!-- row -->
+    </div> <!-- container -->
+</section> *@
+<!--====== TEACHERS PART START ======-->
+
+<section id="teachers-part" class="pt-70 pb-90 gray-bg">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-5">
+                <div class="section-title mt-50 pb-15">
+                    <h5>Featured Teachers</h5>
+                    <h2>Meet Our Teachers</h2>
+                </div> <!-- section title -->
+                <div class="about-cont">
+                    <p>
+                        @school.Name brings together experienced, dedicated teachers across every
+                        department — from the sciences to the arts — committed to helping each
+                        student reach their full potential.
+                    </p>
+                </div>
+                <a asp-controller="Teachers" asp-action="Index" class="main-btn mt-30">Meet the Team</a>
+            </div> <!-- about cont -->
+            <div class="col-lg-7">
+                <div class="row">
+                    @if (teachers != null)
+                    {
+                        @foreach (var teacher in teachers)
+                        {
+                            <div class="col-6 mb-30">
+                                <div style="position:relative; overflow:hidden; border-radius:4px;">
+                                    <img src="@teacher.ImagePath" alt="@teacher.Name"
+                                         style="width:100%; height:280px; object-fit:cover; display:block;">
+                                    <div style="position:absolute; left:20px; bottom:20px; right:20px; background:#fff; padding:15px 20px; border-radius:2px; box-shadow:0 5px 15px rgba(0,0,0,0.1);">
+                                        <a asp-controller="Teachers" asp-action="Details" asp-route-id="@teacher.TeacherId" style="text-decoration:none; color:#222;">
+                                            <h6 style="margin-bottom:2px;">@teacher.Name</h6>
+                                        </a>
+                                        <span style="color:#777; font-size:14px;">@teacher.Role</span>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div> <!-- row -->
+            </div>
+        </div> <!-- row -->
+    </div> <!-- container -->
+</section>
+
+<!--====== TEACHERS PART ENDS ======-->
+<!--====== TEACHERS PART ENDS ======-->
+<!--====== NEWS PART START ======-->
+
+<section id="news-part" class="pt-115 pb-110">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-5">
+                <div class="section-title mt-50 pb-35">
+                    <h5>Our Blog</h5>
+                    <h2>Latest News</h2>
+                </div> <!-- section title -->
+            </div>
+        </div> <!-- row -->
+        <div class="row">
+            @if (latestPosts != null)
+            {
+                @foreach (var post in latestPosts)
+                {
+                    <div class="col-lg-4 col-md-6">
+                        <div class="singel-news mt-30">
+                            <div class="news-thum">
+                                <img src="@post.ImagePath" alt="@post.Title">
+                            </div>
+                            <div class="news-cont">
+                                <ul>
+                                    <li><a href="#"><i class="fa fa-calendar"></i>@post.Date.ToString("dd MMM yyyy")</a></li>
+                                    <li><a href="#"><i class="fa fa-tags"></i>@post.Category</a></li>
+                                </ul>
+                                <a asp-controller="Blog" asp-action="Details" asp-route-id="@post.BlogPostId"><h5>@post.Title</h5></a>
+                            </div>
+                        </div> <!-- singel news -->
+                    </div>
+                }
+            }
+        </div> <!-- row -->
+    </div> <!-- container -->
+</section>
+
+<!--====== NEWS PART ENDS ======-->

@@ -1,0 +1,88 @@
+﻿@using Schoolwebsite.Models
+@model List<Teacher>
+@{
+    var categoryLabels = new Dictionary<string, string>
+    {
+        ["administration"] = "Administration",
+        ["hod"] = "Heads of Department",
+        ["housemaster"] = "House Masters",
+        ["teacher"] = "Teachers"
+    };
+
+    string? selectedCategory = ViewBag.SelectedCategory as string;
+    string pageHeading = (selectedCategory != null && categoryLabels.TryGetValue(selectedCategory, out var label))
+        ? label
+        : "Our Teachers";
+
+    ViewData["Title"] = pageHeading;
+}
+
+<!--====== PAGE BANNER PART START ======-->
+
+<section id="page-banner" class="pt-105 pb-110 bg_cover" data-overlay="8" style="background-image: url(@Url.Content("~/images/page-banner-3.jpg"))">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="page-banner-cont">
+                    <h2>@pageHeading</h2>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+                            @if (selectedCategory != null)
+                            {
+                                <li class="breadcrumb-item"><a asp-controller="Teachers" asp-action="Index">Teachers</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">@pageHeading</li>
+                            }
+                            else
+                            {
+                                <li class="breadcrumb-item active" aria-current="page">Teachers</li>
+                            }
+                        </ol>
+                    </nav>
+                </div>  <!-- page banner cont -->
+            </div>
+        </div> <!-- row -->
+    </div> <!-- container -->
+</section>
+
+<!--====== PAGE BANNER PART ENDS ======-->
+<!--====== TEACHERS PART START ======-->
+<section id="teachers-page" class="pt-90 pb-120 gray-bg">
+    <div class="container">
+        <div class="row">
+            @if (!Model.Any())
+            {
+                <div class="col-lg-12 text-center pt-30 pb-30">
+                    <p class="text-muted">No @pageHeading.ToLower() found yet.</p>
+                </div>
+            }
+            @foreach (var teacher in Model)
+            {
+                <div class="col-lg-3 col-sm-6">
+                    <div class="singel-teachers mt-30 text-center">
+                        <div class="image">
+                            <img src="@teacher.ImagePath" alt="@teacher.Name">
+                        </div>
+                        <div class="cont">
+                            <a asp-controller="Teachers" asp-action="Details" asp-route-id="@teacher.TeacherId"><h6>@teacher.Name</h6></a>
+                            <span>
+                                @{
+                                    var displayTitle = selectedCategory switch
+                                    {
+                                        "hod" when !string.IsNullOrEmpty(teacher.HodTitle) => teacher.HodTitle,
+                                        "housemaster" when !string.IsNullOrEmpty(teacher.HouseMasterTitle) => teacher.HouseMasterTitle,
+                                        "administration" when !string.IsNullOrEmpty(teacher.AdministrationTitle) => teacher.AdministrationTitle,
+                                        _ => teacher.Role
+                                    };
+                                }
+                                @displayTitle
+                            </span>
+                        </div>
+                    </div> <!-- singel teachers -->
+                </div>
+            }
+        </div> <!-- row -->
+    </div> <!-- container -->
+</section>
+
+<!--====== TEACHERS PART ENDS ======-->

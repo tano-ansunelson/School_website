@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="..\..\..\..\Downloads\SchoolWebsite (1)\SchoolWebsite\wwwroot\images\event\se-1.jpg" Link="wwwroot\images\event\se-1.jpg" />
+    <Content Include="..\..\..\..\Downloads\SchoolWebsite (1)\SchoolWebsite\wwwroot\images\event\se-2.jpg" Link="wwwroot\images\event\se-2.jpg" />
+    <Content Include="..\..\..\..\Downloads\SchoolWebsite (1)\SchoolWebsite\wwwroot\images\event\se-3.jpg" Link="wwwroot\images\event\se-3.jpg" />
+    <Content Include="..\..\..\..\Downloads\SchoolWebsite (1)\SchoolWebsite\wwwroot\images\teachers\t-1.jpg" Link="wwwroot\images\teachers\t-1.jpg" />
+    <Content Include="..\..\..\..\Downloads\SchoolWebsite (1)\SchoolWebsite\wwwroot\images\teachers\t-2.jpg" Link="wwwroot\images\teachers\t-2.jpg" />
+    <Content Include="..\..\..\..\Downloads\SchoolWebsite (1)\SchoolWebsite\wwwroot\images\teachers\t-3.jpg" Link="wwwroot\images\teachers\t-3.jpg" />
+    <Content Include="..\..\..\..\Downloads\SchoolWebsite (1)\SchoolWebsite\wwwroot\images\teachers\t-4.jpg" Link="wwwroot\images\teachers\t-4.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\images\about\" />
+    <Folder Include="wwwroot\images\blog\" />
+    <Folder Include="wwwroot\images\event\" />
+    <Folder Include="wwwroot\images\NewFolder\" />
+    <Folder Include="wwwroot\images\teachers\" />
+  </ItemGroup>
+
+  <ItemGroup>
+   
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="10.0.14" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.14" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.14">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.SqlServer.Server" Version="1.0.0" />
+    <PackageReference Include="System.Security.Cryptography.Pkcs" Version="10.0.14" />
+  </ItemGroup>
+
+</Project>

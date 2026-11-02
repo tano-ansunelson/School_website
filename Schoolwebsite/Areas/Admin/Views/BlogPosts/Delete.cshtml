@@ -1,0 +1,24 @@
+﻿@using Schoolwebsite.Models
+@model BlogPost
+@{
+    ViewData["Title"] = "Delete Blog Post";
+}
+
+<div class="admin-card">
+    <p>Are you sure you want to delete <strong>@Model.Title</strong>? This can't be undone.</p>
+
+    <div class="d-flex align-items-center mb-20">
+        <img src="@Model.ImagePath" style="width:80px;height:80px;object-fit:cover;border-radius:4px;" class="mr-15">
+        <div>
+            <strong>@Model.Title</strong><br>
+            <span class="text-muted">By @Model.Author · @Model.Date.ToString("dd MMM yyyy")</span>
+        </div>
+    </div>
+
+    <form asp-action="Delete" method="post">
+        @Html.AntiForgeryToken()
+        <input type="hidden" asp-for="BlogPostId" />
+        <button type="submit" class="btn btn-danger">Yes, Delete</button>
+        <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+    </form>
+</div>

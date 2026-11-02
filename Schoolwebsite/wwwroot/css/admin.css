@@ -1,0 +1,117 @@
+﻿/* Minimal admin dashboard styling — intentionally separate from style.css
+   (the public site's theme) so admin pages don't inherit marketing-site
+   fonts/colors/spacing. */
+
+body.admin-body {
+    background: #f4f6f9;
+    font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+.admin-sidebar {
+    background: #1c2733;
+    min-height: 100vh;
+    padding-top: 20px;
+}
+
+    .admin-sidebar .brand {
+        color: #fff;
+        font-weight: 700;
+        font-size: 18px;
+        padding: 10px 20px 25px
+        display: block;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        margin-bottom: 10px;
+    }
+
+    .admin-sidebar a.nav-link {
+        color: #b7c0cc;
+        padding: 10px 20px;
+        display: block;
+        border-left: 3px solid transparent;
+    }
+
+        .admin-sidebar a.nav-link:hover,
+        .admin-sidebar a.nav-link.active {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.05);
+            border-left-color: #0b294d;
+        }
+
+.admin-topbar {
+    background: #fff;
+    border-bottom: 1px solid #e5e8ec;
+    padding: 14px 25px;
+}
+
+.admin-content {
+    padding: 25px;
+}
+
+.admin-card {
+    background: #fff;
+    border-radius: 6px;
+    border: 1px solid #e5e8ec;
+    padding: 20px;
+}
+
+.stat-card h2 {
+    font-size: 32px;
+    margin-bottom: 0;
+}
+
+.stat-card span {
+    color: #8a94a6;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+}
+
+.admin-table img.thumb {
+    width: 48px;
+    height: 48px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.login-wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #0b294d;
+}
+
+.login-card {
+    background: #fff;
+    border-radius: 8px;
+    padding: 35px;
+    width: 100%;
+    max-width: 380px;
+}
+.admin-table thead th {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    color: #888;
+    font-weight: 600;
+    border-top: none;
+    border-bottom: 2px solid #eee;
+    padding: 12px 16px;
+}
+
+.admin-table td {
+    padding: 12px 16px;
+    vertical-align: middle;
+}
+
+.admin-table tbody tr {
+    transition: background-color .15s ease;
+}
+
+    .admin-table tbody tr:hover {
+        background-color: #f8f9fb;
+    }
+
+.admin-table .btn-sm {
+    padding: 4px 9px;
+}

@@ -1,0 +1,80 @@
+﻿@using Schoolwebsite.ViewModels.Admin
+@model CourseViewModel
+@{
+    bool isEdit = Model.Id != 0;
+}
+
+<form asp-action="@(isEdit ? "Edit" : "Create")" method="post" enctype="multipart/form-data">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="Id" />
+
+    <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group mb-15">
+                <label asp-for="Title"></label>
+                <input asp-for="Title" class="form-control">
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+           @*  <div class="form-group mb-15">
+                <label asp-for="Category"></label>
+                <input asp-for="Category" class="form-control">
+                <span asp-validation-for="Category" class="text-danger"></span>
+            </div> *@
+            <div class="form-group mb-15">
+                <label asp-for="Duration"></label>
+                <input asp-for="Duration" class="form-control">
+                <span asp-validation-for="Duration" class="text-danger"></span>
+            </div>
+          @*   <div class="form-group mb-15">
+                <label asp-for="CoordinatorId"></label>
+                <select asp-for="CoordinatorId" class="form-control">
+                    <option value="">-- Select a teacher --</option>
+                    @foreach (var teacher in Model.AvailableTeachers)
+                    {
+                        <option value="">@teacher.Name (@teacher.Role)</option>
+                    }
+                </select>
+                <span asp-validation-for="CoordinatorId" class="text-danger"></span>
+            </div> *@
+            <div class="form-group mb-15">
+                <label asp-for="Image"></label>
+                <input asp-for="Image" type="file" class="form-control" accept="image/*">
+                <span asp-validation-for="Image" class="text-danger"></span>
+                @if (isEdit && !string.IsNullOrEmpty(Model.ExistingImagePath))
+                {
+                    <div class="mt-10">
+                        <img src="@Model.ExistingImagePath" style="max-width:150px;border-radius:4px;">
+                        <p class="text-muted mb-0" style="font-size:12px;">Current image — choose a new file above to replace it.</p>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group mb-15">
+                <label asp-for="Overview"></label>
+                <textarea asp-for="Overview" class="form-control" rows="4"></textarea>
+                <span asp-validation-for="Overview" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-15">
+                <label asp-for="CoreSubjects"></label>
+                <textarea asp-for="CoreSubjects" class="form-control" rows="3"></textarea>
+                <span asp-validation-for="CoreSubjects" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-15">
+                <label asp-for="ElectiveSubjects"></label>
+                <textarea asp-for="ElectiveSubjects" class="form-control" rows="3"></textarea>
+                <span asp-validation-for="ElectiveSubjects" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-15">
+                <label asp-for="EntryRequirements"></label>
+                <textarea asp-for="EntryRequirements" class="form-control" rows="3"></textarea>
+                <span asp-validation-for="EntryRequirements" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">@(isEdit ? "Save Changes" : "Add Programme")</button>
+    <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+</form>
