@@ -3,6 +3,47 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+
+
+
+
+
+
+# Visual Studio
+.vs/
+bin/
+obj/
+
+# Application settings
+appsettings.json
+appsettings.Development.json
+appsettings.Production.json
+
+# User-specific files
+*.user
+*.suo
+
+# Logs
+*.log
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # User-specific files
 *.rsuser
 *.suo
